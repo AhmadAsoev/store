@@ -22,6 +22,9 @@ func main() {
 	//AddProduct adding product in store
 	router.HandleFunc("/product", handleFunc.Product).Methods(POST)
 
+	//GetAllProducts
+	router.HandleFunc("/allProducts", handleFunc.AllProducts).Methods(GET)
+
 	if err := http.ListenAndServe(port, router); err != nil {
 		log.Fatal("server is not ready!")
 	}
