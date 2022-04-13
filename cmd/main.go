@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	GET = "GET"
+	GET  = "GET"
+	POST = "POST"
 )
 
 func main() {
@@ -17,6 +18,9 @@ func main() {
 
 	//Health check server
 	router.HandleFunc("/health", handleFunc.Health).Methods(GET)
+
+	//AddProduct adding product in store
+	router.HandleFunc("/product", handleFunc.Product).Methods(POST)
 
 	if err := http.ListenAndServe(port, router); err != nil {
 		log.Fatal("server is not ready!")
