@@ -2,10 +2,9 @@ package services
 
 import (
 	"net/http"
+	"store/pkg/application/repository"
 	"store/pkg/domain"
 )
-
-var Products []domain.Store
 
 func Product(info domain.Store) (response domain.Response) {
 	if err := info.Validate(); err != nil {
@@ -16,7 +15,12 @@ func Product(info domain.Store) (response domain.Response) {
 		}
 	}
 
-	Products = append(Products, info)
+	if err := repository.AddProduct(info); err != nil {
+		return domain.Response{
+			Code:  http.StatusInternalServerError,
+			Error: "Can't add into db",
+		}
+	}
 
 	return domain.Response{
 		Code:    http.StatusOK,
